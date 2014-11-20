@@ -1,14 +1,13 @@
 package org.irockezio.bearded.turingmachine;
 
 import org.junit.Test;
-import sun.jvm.hotspot.utilities.Assert;
 
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 
-public class TuringMachineTest extends Assert {
+public class TuringMachineTest {
 
     @Test
     public void testRunProgram() throws Exception {
