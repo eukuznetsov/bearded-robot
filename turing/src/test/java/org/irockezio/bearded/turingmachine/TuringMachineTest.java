@@ -11,12 +11,10 @@ public class TuringMachineTest {
 
     @Test
     public void testRunProgram() throws Exception {
-        TuringMachine machine = new TuringMachine();
-
         try {
             TuringMachineTape tape = new TuringMachineTape(new TuringMachineCellValue('a'));
             TuringMachineProgram program = new TuringMachineProgram();
-            machine.runProgram(program, tape);
+            TuringMachine.runProgram(program, tape);
             fail();
         } catch (BadProgram e) {
         }
@@ -29,7 +27,7 @@ public class TuringMachineTest {
                     TapeDirection.NONE, -1
             );
             program.addInstruction(instruction);
-            TuringMachineTape result = machine.runProgram(program, tape);
+            TuringMachineTape result = TuringMachine.runProgram(program, tape);
             assertEquals(result.getCell(0), new TuringMachineCellValue('b'));
         } catch (Exception e) {
             fail();
@@ -44,7 +42,7 @@ public class TuringMachineTest {
                     new TuringMachineCellValue('b'),
                     new TuringMachineCellValue('c')
             );
-            TuringMachineTape result = machine.runProgram(new TuringMachineProgram(instructions), tape);
+            TuringMachineTape result = TuringMachine.runProgram(new TuringMachineProgram(instructions), tape);
             TuringMachineTape standard = new TuringMachineTape(
                     new TuringMachineCellValue('a'),
                     new TuringMachineCellValue('b'),
@@ -61,12 +59,26 @@ public class TuringMachineTest {
         TuringMachineTape tape = new TuringMachineTape(
                 new TuringMachineCellValue('a')
         );
-        TuringMachineTape result = machine.runProgram(new TuringMachineProgram(instructions), tape);
+        TuringMachineTape result = TuringMachine.runProgram(new TuringMachineProgram(instructions), tape);
         TuringMachineTape standard = new TuringMachineTape(
                 new TuringMachineCellValue(null)
         );
         assertEquals(result, standard);
 
+        TuringMachineTape tape1 = new TuringMachineTape(
+                new TuringMachineCellValue('1')
+        );
+        TuringMachineProgram program1 = new TuringMachineProgram(
+                TuringMachineInstruction.parseInstructions(
+                        "0 1 0 r 0",
+                        "0   n halt"
+                )
+        );
+        TuringMachineTape resultTape1 = TuringMachine.runProgram(program1, tape1);
+        TuringMachineTape standardTape1 = new TuringMachineTape(
+                new TuringMachineCellValue('0')
+        );
+        assertEquals(standardTape1, resultTape1);
     }
 
 }

@@ -5,11 +5,13 @@ import java.util.logging.Logger;
 public final class TuringMachine {
 
     private static final Logger logger = Logger.getLogger(TuringMachine.class.getName());
+    private static final int FIRST_STATE = 0;
+    private static final int FIRST_CELL = 0;
 
-    private final int FIRST_STATE = 0;
-    private final int FIRST_CELL = 0;
+    private TuringMachine() {
+    }
 
-    public TuringMachineTape runProgram(TuringMachineProgram program, TuringMachineTape tape) throws BadProgram, BadTape {
+    public static TuringMachineTape runProgram(TuringMachineProgram program, TuringMachineTape tape) throws BadProgram, BadTape {
         if (tape == null) {
             throw new BadTape();
         }
@@ -26,7 +28,7 @@ public final class TuringMachine {
             TuringMachineCellValue value = tape.getCell(currentCell);
             TuringMachineInstruction instruction = program.getInstruction(currentState, value);
             if (instruction == null) {
-                throw new BadProgram("Instruction for state=" + Integer.toString(currentState) + ", value=" + value);
+                throw new BadProgram("Instruction for state=" + Integer.toString(currentState) + ", value=" + value + " is not found");
             }
             tape.setCellValue(currentCell, instruction.getDestinationSymbol());
 

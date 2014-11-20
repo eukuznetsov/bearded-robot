@@ -42,7 +42,7 @@ public class TuringMachineTape implements Iterable {
             throw new IllegalArgumentException("Length is too big");
         }
         while (size > cells.size()) {
-            cells.add(null);
+            cells.add(new TuringMachineCellValue(null));
         }
         logger.fine("Tape size is " + cells.size());
     }
